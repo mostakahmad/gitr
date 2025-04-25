@@ -188,7 +188,7 @@ export default function Home() {
             onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#006fd6')}
             onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = '#0084FF')}
           >
-            <FaFacebookMessenger style={{ marginRight: '8px' }} /> Message to Request 🎀
+            {/* <FaFacebookMessenger style={{ marginRight: '8px' }} /> Message to Request 🎀 */}
           </button>
         </>
       )}
