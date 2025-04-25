@@ -1,6 +1,7 @@
 // pages/index.js
 import { useState, useEffect } from 'react';
 import { FaHeart, FaGift, FaFacebookMessenger } from 'react-icons/fa';
+import ChatBot from '../components/ChatBot';
 
 const products = [
   { name: "Eveline Mattifying Primer", price: 399, type: "Primer" },
@@ -198,6 +199,8 @@ export default function Home() {
           💖 You've already selected a gift this month! 💖
         </p>
       )}
+
+      <ChatBot />
     </div>
   );
 }
