@@ -1,5 +1,6 @@
 // pages/index.js
 import { useState, useEffect } from 'react';
+import { FaHeart, FaGift, FaFacebookMessenger } from 'react-icons/fa';
 
 const products = [
   { name: "Eveline Mattifying Primer", price: 399, type: "Primer" },
@@ -24,6 +25,7 @@ const products = [
 
 export default function Home() {
   const [selectedIndex, setSelectedIndex] = useState(null);
+  const [selectedmonth, setSelectedMonth] = useState(null);
   const [hasSelected, setHasSelected] = useState(false);
   const currentMonth = new Date().toLocaleString('default', { month: 'long', year: 'numeric' });
 
@@ -35,6 +37,7 @@ export default function Home() {
         if (existing) {
           setSelectedIndex(existing.productIndex);
           setHasSelected(true);
+          setSelectedMonth(existing.month);
         }
       });
   }, [currentMonth]);
@@ -75,13 +78,37 @@ export default function Home() {
       });
   };
 
+  const handleMessenger = () => {
+    if (selectedIndex === null) {
+      alert("Please select a product first!");
+      return;
+    }
+    const text = encodeURIComponent(`Please give me this item: ${products[selectedIndex].name}`);
+    window.open(`https://m.me/YOUR_PAGE_USERNAME?ref=${text}`, '_blank');
+  };
 
   return (
-    <div style={{ padding: '20px', fontFamily: 'Arial, sans-serif', maxWidth: '800px', margin: '0 auto' }}>
-      <h1 style={{ textAlign: 'center', color: '#4CAF50', marginBottom: '20px' }}>Monthly Gifting Selection</h1>
-      <p style={{ textAlign: 'center', fontSize: '18px', color: '#555' }}>
-        Please select your favorite gift from the list below. Choose wisely! 🎁✨
-      </p>
+    <div style={{
+      padding: '20px',
+      fontFamily: '"Comic Sans MS", cursive, sans-serif',
+      maxWidth: '850px',
+      margin: '0 auto',
+      background: 'linear-gradient(to bottom right, #ffe0f0, #f0e0ff)',
+      borderRadius: '20px',
+      boxShadow: '0 10px 25px rgba(0,0,0,0.1)'
+    }}>
+      <div style={{ textAlign: 'center', marginBottom: '20px', position: 'relative' }}>
+        {/* <img src="/lyandra-lyandra-family.gif" alt="hearts" style={{ width: '80px', position: 'absolute', top: '-20px', left: '30px' }} /> */}
+        {/* <img src="/floating-gift.gif" alt="gift" style={{ width: '60px', position: 'absolute', top: '-10px', right: '30px' }} /> */}
+        <h1 style={{ color: '#ff66b2', fontSize: '32px', fontWeight: 'bold' }}>🎀 Monthly Gifting Selection 🎀</h1>
+        <p style={{ fontSize: '18px', color: '#555' }}>
+          Please select your favorite gift from the list below. Choose wisely! <FaGift color="#f50057" />
+        </p>
+        <p style={{ fontSize: '16px', color: '#777' }}>
+          {hasSelected ? `You have already selected a gift for ${selectedmonth}.` : "Select a gift for this month!"}
+        </p>
+      </div>
+
       <ul style={{ listStyle: 'none', padding: 0, marginTop: '30px' }}>
         {products.map((product, index) => (
           <li
@@ -90,59 +117,85 @@ export default function Home() {
             style={{
               padding: '15px',
               marginBottom: '12px',
-              border: '1px solid #ddd',
-              borderRadius: '10px',
-              backgroundColor: selectedIndex === index ? '#e8f5e9' : '#fff',
-              boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+              border: '2px dashed #d48eb2',
+              borderRadius: '15px',
+              backgroundColor: selectedIndex === index ? '#ffe6f0' : '#fff',
+              boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
               cursor: hasSelected ? 'not-allowed' : 'pointer',
-              transition: 'transform 0.2s, box-shadow 0.2s',
               display: 'flex',
               justifyContent: 'space-between',
               alignItems: 'center',
+              transition: 'transform 0.2s ease-in-out',
             }}
             onMouseEnter={(e) => {
-              if (!hasSelected) e.currentTarget.style.transform = 'scale(1.02)';
+              if (!hasSelected) e.currentTarget.style.transform = 'scale(1.03)';
             }}
             onMouseLeave={(e) => {
               if (!hasSelected) e.currentTarget.style.transform = 'scale(1)';
             }}
           >
             <div>
-              <strong style={{ fontSize: '16px', color: '#333' }}>{product.name}</strong>
+              <strong style={{ fontSize: '16px', color: '#c2185b' }}>{product.name}</strong>
               <p style={{ margin: '5px 0', fontSize: '14px', color: '#777' }}>
                 Tk {product.price} ({product.type})
               </p>
             </div>
             {selectedIndex === index && (
-              <span style={{ color: '#4CAF50', fontWeight: 'bold' }}>Selected</span>
+              <span style={{ color: '#f50057', fontWeight: 'bold' }}>💖 Selected</span>
             )}
           </li>
         ))}
       </ul>
+
       {!hasSelected && (
-        <button
-          onClick={handleSubmit}
-          style={{
-            display: 'block',
-            margin: '30px auto 0',
-            padding: '12px 25px',
-            fontSize: '16px',
-            color: '#fff',
-            backgroundColor: '#4CAF50',
-            border: 'none',
-            borderRadius: '5px',
-            cursor: 'pointer',
-            transition: 'background-color 0.3s',
-          }}
-          onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#45a049')}
-          onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = '#4CAF50')}
-        >
-          Submit Selection
-        </button>
+        <>
+          <button
+            onClick={handleSubmit}
+            style={{
+              display: 'block',
+              margin: '30px auto 10px',
+              padding: '12px 25px',
+              fontSize: '16px',
+              color: '#fff',
+              backgroundColor: '#f50057',
+              border: 'none',
+              borderRadius: '10px',
+              cursor: 'pointer',
+              boxShadow: '0 4px 10px rgba(245, 0, 87, 0.3)',
+              transition: 'background-color 0.3s',
+            }}
+            onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#c51162')}
+            onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = '#f50057')}
+          >
+            🎁 Submit My Selection
+          </button>
+
+          <button
+            onClick={handleMessenger}
+            style={{
+              display: 'block',
+              margin: '15px auto 0',
+              padding: '10px 22px',
+              fontSize: '15px',
+              color: '#fff',
+              backgroundColor: '#0084FF',
+              border: 'none',
+              borderRadius: '8px',
+              cursor: 'pointer',
+              boxShadow: '0 3px 8px rgba(0, 132, 255, 0.3)',
+              transition: 'background-color 0.3s',
+            }}
+            onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#006fd6')}
+            onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = '#0084FF')}
+          >
+            <FaFacebookMessenger style={{ marginRight: '8px' }} /> Message to Request 🎀
+          </button>
+        </>
       )}
+
       {hasSelected && (
-        <p style={{ color: '#4CAF50', textAlign: 'center', marginTop: '30px', fontSize: '16px' }}>
-          You've already selected a gift this month 💚
+        <p style={{ color: '#c2185b', textAlign: 'center', marginTop: '30px', fontSize: '18px', fontWeight: 'bold' }}>
+          💖 You've already selected a gift this month! 💖
         </p>
       )}
     </div>
